@@ -8,16 +8,13 @@ const blogHistory = JSON.parse(localStorage.getItem("blogHistory")) || [];
 function collectFormData(event) {
     event.preventDefault()
     console.log(event)
-    const blogObject = {
-        username: usernameElement.value,
-        title: titleElement.value,
-        content: contentElement.value,
+const username = usernameElement.value,
+const title = titleElement.value,
+const content = contentElement.value,
 
-    }
-    console.log(blogObject)
 blogHistory.push(blogObject)
 localStorage.setItem('blogHistory', JSON.stringify(blogHistory))
-location.replace('./blog2.html')
+location.replace('./blog.html')
 
 }
 

@@ -1,46 +1,36 @@
-let blogArray = localStorage.getItem('blogs') ? JSON.parse(localStorage
-    .getItem('blogs')) : [];
-var ul;
-function add() {
-var username = document.getElementById("username").value;
-var title = document.getElementById("title").value;
-var content = document.getElementById("content").value;
-if(username.trim().length < 1 || title.trim().length < 1 || content.trim().length < 1) {
-    alert("Please enter data for all fields!");
-    return;
-}
-blogArray.push({
-    userName : username,
-    blogTitle : title,
-    blogContent : content
-});
-username.value = "";
-title.value = "";
-content.value = "";
-var title = document.getElementById("title").value;
-var content = document.getElementById("content").value;
-localStorage.setItem('blogs', JSON.stringify(blogArray));
-window.location.href='mbook.html'
-}
-function addTask(blogArray) {
-alert(blogArray.userName + "-" + blogArray.blogTitle);
-}
-function submit() {
-ul = document.querySelector('ul');		
-blogArray.forEach(addTask);
-function addTask(blogArray) {
-    const li = document.createElement('li')
-      li.textContent = blogArray.userName + " - " + blogArray.blogTitle;
-      ul.appendChild(li);
-}
-//window.location.href='mbook.html';
-}
-function back() {
-window.location.href='rbook.html'
+const blogPosts = document.getElementById('blogsContainer'); 
+
+function postBlogs(){
+    const blogHistory = JSON.parse(localStorage.getItem("blogs")) || [];
+
+    blogHistory.forEach((blog) => {
+        const divEl = document.createElement('div')
+        divEl.classList.add('card')
+        const titleEl = document.createElement('h4')
+        titleEl.textContent = blog.title; 
+
+        const contentEl= document.createElement('p')
+        contentEl.textContent = blog.content; 
+
+        const userEl = document.createElement('p')
+        userEl.textContent = `User: ${blog.username}`; 
+
+        divEl.appendChild(titleEl)
+        divEl.appendChild(contentEl)
+        divEl.appendChild(userEl)
+
+        blogPosts.appendChild(divEl)
+
+    });
 }
 
-function reset() {
-localStorage.clear();
-ul.innerHTML = '';
-blogArray = [];
+postBlogs(); 
+
+const goBack = function(event){
+    event.preventDefault()
+
+    window.location.href='./index.html'
 }
+
+const backButton = document.getElementById('back')
+backButton.addEventListener('click', goBack);
